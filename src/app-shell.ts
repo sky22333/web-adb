@@ -64,6 +64,16 @@ const MOBILE_NAV: NavItem[] = [
   { id: 'logs', label: '日志', icon: 'history' },
 ];
 
+const GITHUB_MARK = html`<svg viewBox="0 0 16 16" aria-hidden="true">
+  <path
+    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+  />
+</svg>`;
+
+const isWindows = /Windows/i.test(
+  (navigator as { userAgentData?: { platform?: string } }).userAgentData?.platform ?? navigator.userAgent,
+);
+
 @customElement('adb-toolbox-app')
 export class AdbToolboxApp extends LitElement {
   @state() private app: AppState = appStore.state;
@@ -133,7 +143,29 @@ export class AdbToolboxApp extends LitElement {
         </header>
 
         <aside class=${this.railOpen ? 'rail open' : 'rail'}>
-          ${NAV_GROUPS.map((group) => this.navGroup(group))}
+          <div class="nav-scroll">${NAV_GROUPS.map((group) => this.navGroup(group))}</div>
+          <div class="rail-footer">
+            <a
+              class="rail-link"
+              href="https://github.com/sky22333/web-adb"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub 仓库"
+              title="GitHub 仓库"
+              >${GITHUB_MARK}</a
+            >
+            ${isWindows
+              ? html`<a
+                  class="rail-link"
+                  href="https://github.com/pbatard/libwdi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Windows USB 驱动 (libwdi)"
+                  title="Windows USB 驱动 (libwdi)"
+                  ><md-icon>usb</md-icon></a
+                >`
+              : nothing}
+          </div>
         </aside>
         <main class="main">${this.activeTask()} ${this.connectHint()} ${this.renderPage()}</main>
         <nav class="bottom-nav">${MOBILE_NAV.map((item) => this.mobileNavItem(item))}</nav>
@@ -410,10 +442,48 @@ export class AdbToolboxApp extends LitElement {
       min-width: 96px;
     }
     .rail {
-      overflow: auto;
-      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 14px 10px 8px;
       border-right: 1px solid var(--md-sys-color-outline-variant);
       background: var(--md-sys-color-surface-container-low);
+    }
+    .nav-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+    }
+    .rail-footer {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid var(--md-sys-color-outline-variant);
+    }
+    .rail-link {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      color: var(--md-sys-color-outline);
+      text-decoration: none;
+      transition:
+        background var(--app-duration) var(--app-easing),
+        color var(--app-duration) var(--app-easing);
+    }
+    .rail-link:hover {
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
+    }
+    .rail-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    .rail-link md-icon {
+      font-size: 18px;
     }
     .nav-group + .nav-group {
       margin-top: 14px;
