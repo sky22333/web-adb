@@ -19,20 +19,19 @@
   color: var(--app-log-fg);
   background: var(--app-log-bg);
   border: 1px solid var(--app-log-border);
-  border-left: 4px solid var(--md-sys-color-outline);
   box-shadow: var(--app-shadow);
   cursor: pointer;
   animation: toast-in var(--app-duration) var(--app-easing);
 }
 
 .toast.ok {
-  border-left-color: var(--app-success);
+  border-color: var(--app-success);
 }
 .toast.warn {
-  border-left-color: var(--app-warning);
+  border-color: var(--app-warning);
 }
 .toast.err {
-  border-left-color: var(--md-sys-color-error);
+  border-color: var(--md-sys-color-error);
 }
 .toast.leaving {
   opacity: 0;
