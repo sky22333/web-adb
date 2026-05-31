@@ -9,6 +9,8 @@
 - ADB 模式需要在 Android 设备上开启 USB 调试并确认授权。
 - Fastboot 功能需要设备已进入 Bootloader/Fastboot 模式。
 
+windows系统需要USB驱动：https://github.com/pbatard/libwdi
+
 ## 开发
 
 ```bash
