@@ -3,6 +3,9 @@ name: 部署到 GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+
   workflow_dispatch:
 
 permissions:
