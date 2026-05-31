@@ -52,14 +52,14 @@ export async function packageApkPaths(packageName: string): Promise<string[]> {
 
 export async function installApk(
   file: File,
-  args: string[],
+  options: { grant?: boolean },
   onProgress?: (percent: number, label: string) => void,
 ): Promise<void> {
   const adb = adbClient.ensure();
   const pm = new PackageManager(adb);
   onProgress?.(8, '准备安装会话');
   await pm.installStream(file.size, new WrapReadableStream(file.stream() as any), {
-    grantRuntimePermissions: args.includes('-g'),
+    grantRuntimePermissions: options.grant ?? false,
   });
   onProgress?.(100, '安装完成');
 }

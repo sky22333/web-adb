@@ -19,7 +19,7 @@ export class FastbootClient {
 
   async connect(): Promise<void> {
     if (this.connected) return this.disconnect();
-    appStore.patch({ fastboot: { status: 'connecting' } });
+    appStore.patchFastboot({ status: 'connecting', error: undefined });
     try {
       const usb = getUsb();
       const device = await usb.requestDevice({ filters: appStore.allVendorIds().map((vendorId) => ({ vendorId })) });
@@ -39,13 +39,11 @@ export class FastbootClient {
       this.iface = found.iface;
       this.epIn = found.epIn;
       this.epOut = found.epOut;
-      appStore.patch({
-        fastboot: {
-          status: 'connected',
-          productName: device.productName,
-          vendorId: device.vendorId,
-          productId: device.productId,
-        },
+      appStore.patchFastboot({
+        status: 'connected',
+        productName: device.productName,
+        vendorId: device.vendorId,
+        productId: device.productId,
       });
       appStore.log(`Fastboot 已连接：${device.productName || '未知设备'}`, 'ok');
     } catch (error) {
@@ -54,7 +52,7 @@ export class FastbootClient {
       this.epIn = null;
       this.epOut = null;
       const appError = toAppError(error, 'FASTBOOT_ENDPOINT_NOT_FOUND');
-      appStore.patch({ fastboot: { status: 'error', error: appError } });
+      appStore.patchFastboot({ status: 'error', error: appError });
       appStore.log(`Fastboot 连接失败：${appError.message}`, 'err');
       throw appError;
     }
@@ -72,7 +70,7 @@ export class FastbootClient {
       this.epIn = null;
       this.epOut = null;
       this.locked = false;
-      appStore.patch({ fastboot: { status: 'idle' } });
+      appStore.patchFastboot({ status: 'idle', productName: undefined, vendorId: undefined, productId: undefined, error: undefined });
       appStore.log('Fastboot 已断开', 'warn');
     }
   }

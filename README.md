@@ -37,10 +37,14 @@ npm run check
 
 ## 文件说明
 
-- `src/app-shell.ts`：应用壳、响应式导航、页面入口和用户反馈。
+- `src/app-shell.ts`：应用壳，仅负责布局、响应式导航、路由和连接入口。
+- `src/pages/*`：各功能页面组件（概览、Shell、应用、文件、截图、日志、Fastboot、设置等）。
+- `src/components/*`：可复用组件（`drop-zone` 拖拽上传、Material 组件注册）。
 - `src/core/adb/*`：ADB 连接、shell、应用、文件、截图、logcat。
 - `src/core/fastboot/*`：Fastboot WebUSB 连接、协议解析、刷入。
 - `src/core/state/app-store.ts`：连接状态、任务状态、设置和日志。
+- `src/core/ui/feedback.ts`：全局 Toast 与 `md-dialog` 确认框。
+- `src/styles/*`：全局样式（reset/tokens/theme/layout/feedback）与组件共享样式 `shared.ts`。
 
 ## 安全提示
 

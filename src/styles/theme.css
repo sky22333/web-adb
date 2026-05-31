@@ -1,0 +1,47 @@
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --md-sys-color-primary: #adc6ff;
+  --md-sys-color-on-primary: #082f60;
+  --md-sys-color-primary-container: #284777;
+  --md-sys-color-on-primary-container: #d7e3ff;
+  --md-sys-color-secondary: #bec6dc;
+  --md-sys-color-secondary-container: #3e4759;
+  --md-sys-color-on-secondary-container: #dae2f9;
+  --md-sys-color-tertiary: #ddbce0;
+  --md-sys-color-tertiary-container: #573e5c;
+  --md-sys-color-on-tertiary-container: #fad8fd;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-background: #111318;
+  --md-sys-color-on-background: #e2e2e9;
+  --md-sys-color-surface: #111318;
+  --md-sys-color-on-surface: #e2e2e9;
+  --md-sys-color-surface-container-lowest: #0c0e13;
+  --md-sys-color-surface-container-low: #191c22;
+  --md-sys-color-surface-container: #1d2027;
+  --md-sys-color-surface-container-high: #282a31;
+  --md-sys-color-surface-container-highest: #33353c;
+  --md-sys-color-outline: #8e9199;
+  --md-sys-color-outline-variant: #44474f;
+  --app-bg: #111318;
+  --app-bg-accent-a: rgba(173, 198, 255, 0.08);
+  --app-bg-accent-b: rgba(221, 188, 224, 0.06);
+  --app-log-bg: #1b1e25;
+  --app-log-fg: #e2e7f5;
+  --app-log-border: #3f4450;
+  --app-row-bg: var(--md-sys-color-surface-container);
+  --app-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+:root {
+  --app-log-bg: #eef2fb;
+  --app-log-fg: #222832;
+  --app-log-border: #d7dce6;
+  --app-row-bg: var(--md-sys-color-surface-container-low);
+}
+
+body {
+  transition:
+    background-color var(--app-duration) var(--app-easing),
+    color var(--app-duration) var(--app-easing);
+}

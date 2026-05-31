@@ -16,7 +16,7 @@ export class AdbClient {
 
   async connect(): Promise<void> {
     if (this.connected) return this.disconnect();
-    appStore.patch({ adb: { status: 'connecting' } });
+    appStore.patchAdb({ status: 'connecting', error: undefined });
     try {
       assertWebUsbReady();
       const manager = AdbDaemonWebUsbDeviceManager.BROWSER;
@@ -34,18 +34,18 @@ export class AdbClient {
       this.adb = new Adb(transport);
       this.transport = transport;
       this.device = device;
-      appStore.patch({ adb: { status: 'connected', serial: device.serial } });
+      appStore.patchAdb({ status: 'connected', serial: device.serial });
       appStore.log('ADB 已连接', 'ok');
     } catch (error) {
       const appError = toAppError(error, 'ADB_AUTH_FAILED');
-      appStore.patch({ adb: { status: 'error', error: appError } });
+      appStore.patchAdb({ status: 'error', error: appError });
       appStore.log(`ADB 连接失败：${appError.message}`, 'err');
       throw appError;
     }
   }
 
   async disconnect(): Promise<void> {
-    appStore.patch({ adb: { ...appStore.state.adb, status: 'disconnecting' } });
+    appStore.patchAdb({ status: 'disconnecting' });
     try {
       await this.adb?.close?.();
       await this.transport?.close?.();
@@ -53,7 +53,7 @@ export class AdbClient {
       this.adb = null;
       this.transport = null;
       this.device = null;
-      appStore.patch({ adb: { status: 'idle' } });
+      appStore.patchAdb({ status: 'idle', serial: undefined, model: undefined, android: undefined, error: undefined });
       appStore.log('ADB 已断开', 'warn');
     }
   }

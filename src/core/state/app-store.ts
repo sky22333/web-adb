@@ -18,11 +18,13 @@ export interface TaskState {
   progress: number;
 }
 
+export type ThemeMode = 'light' | 'dark' | 'auto';
+
 export interface AppSettings {
   customVendorIds: number[];
   fastbootChunkSize: number;
   maxLogLines: number;
-  theme: 'light' | 'dark';
+  theme: ThemeMode;
 }
 
 export interface AppState {
@@ -43,10 +45,10 @@ function loadSettings(): AppSettings {
       customVendorIds: saved.customVendorIds ?? [],
       fastbootChunkSize: saved.fastbootChunkSize ?? 1024 * 1024,
       maxLogLines: saved.maxLogLines ?? 1000,
-      theme: saved.theme ?? 'light',
+      theme: saved.theme ?? 'auto',
     };
   } catch {
-    return { customVendorIds: [], fastbootChunkSize: 1024 * 1024, maxLogLines: 1000, theme: 'light' };
+    return { customVendorIds: [], fastbootChunkSize: 1024 * 1024, maxLogLines: 1000, theme: 'auto' };
   }
 }
 
@@ -71,6 +73,16 @@ export class AppStore extends EventTarget {
 
   patch(partial: Partial<AppState>): void {
     this.state = { ...this.state, ...partial };
+    this.emit();
+  }
+
+  patchAdb(partial: Partial<AppState['adb']>): void {
+    this.state = { ...this.state, adb: { ...this.state.adb, ...partial } };
+    this.emit();
+  }
+
+  patchFastboot(partial: Partial<AppState['fastboot']>): void {
+    this.state = { ...this.state, fastboot: { ...this.state.fastboot, ...partial } };
     this.emit();
   }
 

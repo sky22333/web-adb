@@ -1,0 +1,55 @@
+.toast-host {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 1000;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  max-width: min(520px, calc(100vw - 32px));
+  padding: 12px 18px;
+  border-radius: 14px;
+  color: var(--app-log-fg);
+  background: var(--app-log-bg);
+  border: 1px solid var(--app-log-border);
+  border-left: 4px solid var(--md-sys-color-outline);
+  box-shadow: var(--app-shadow);
+  cursor: pointer;
+  animation: toast-in var(--app-duration) var(--app-easing);
+}
+
+.toast.ok {
+  border-left-color: var(--app-success);
+}
+.toast.warn {
+  border-left-color: var(--app-warning);
+}
+.toast.err {
+  border-left-color: var(--md-sys-color-error);
+}
+.toast.leaving {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--app-duration-fast) var(--app-easing),
+    transform var(--app-duration-fast) var(--app-easing);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+md-dialog [data-danger] {
+  --md-filled-button-container-color: var(--md-sys-color-error);
+  --md-filled-button-label-text-color: var(--md-sys-color-on-error);
+}
