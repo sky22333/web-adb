@@ -2,6 +2,8 @@
 
 在浏览器中通过 WebUSB 直接控制 Android 设备，无需安装本地 adb / fastboot。基于 Vite + TypeScript + Lit + Material Web。
 
+在线地址：https://blog.52013120.xyz/web-adb/
+
 ## 功能
 
 - **设备概览**：型号、系统版本、电量等属性，一键重启 / 进 Bootloader。
