@@ -1,0 +1,47 @@
+:root {
+  color-scheme: light;
+  --md-sys-color-primary: #3f5f90;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #d7e3ff;
+  --md-sys-color-on-primary-container: #001b3f;
+  --md-sys-color-secondary: #565f71;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #dae2f9;
+  --md-sys-color-on-secondary-container: #131c2b;
+  --md-sys-color-tertiary: #705575;
+  --md-sys-color-tertiary-container: #fad8fd;
+  --md-sys-color-on-tertiary-container: #28132e;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-background: #f7f9ff;
+  --md-sys-color-on-background: #191c20;
+  --md-sys-color-surface: #fbfcff;
+  --md-sys-color-on-surface: #191c20;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f1f3fa;
+  --md-sys-color-surface-container: #ebeef6;
+  --md-sys-color-surface-container-high: #e5e8f0;
+  --md-sys-color-surface-container-highest: #dfe2ea;
+  --md-sys-color-outline: #74777f;
+  --md-sys-color-outline-variant: #c4c6d0;
+  --md-sys-color-scrim: #000000;
+
+  --app-bg: #f7f9ff;
+  --app-bg-accent-a: rgba(63, 95, 144, 0.06);
+  --app-bg-accent-b: rgba(112, 85, 117, 0.05);
+  --app-bg-accent-c: rgba(86, 95, 113, 0.05);
+  --app-success: #238636;
+  --app-warning: #b66a00;
+  --app-radius-card: 18px;
+  --app-radius-control: 14px;
+  --app-sidebar: 276px;
+  --app-header: 64px;
+  --app-gap: 16px;
+  --app-gap-lg: 24px;
+  --app-shadow: 0 1px 2px rgba(25, 28, 32, 0.04), 0 10px 24px rgba(25, 28, 32, 0.06);
+  --app-shadow-soft: 0 1px 2px rgba(25, 28, 32, 0.04);
+  --app-font: 'Manrope', 'Inter', 'HarmonyOS Sans SC', 'MiSans', 'PingFang SC', 'Microsoft YaHei UI', ui-sans-serif,
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --app-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+}

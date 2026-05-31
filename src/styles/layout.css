@@ -1,0 +1,20 @@
+.mono {
+  font-family: var(--app-mono);
+}
+
+md-filled-button,
+md-tonal-button,
+md-outlined-button,
+md-text-button {
+  --md-filled-button-container-shape: var(--app-radius-control);
+  --md-tonal-button-container-shape: var(--app-radius-control);
+  --md-outlined-button-container-shape: var(--app-radius-control);
+  --md-text-button-container-shape: var(--app-radius-control);
+}
+
+md-outlined-text-field,
+md-filled-text-field {
+  width: 100%;
+  --md-outlined-text-field-container-shape: var(--app-radius-control);
+  --md-filled-text-field-container-shape: var(--app-radius-control);
+}

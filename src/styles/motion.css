@@ -1,0 +1,5 @@
+:root {
+  --app-easing: cubic-bezier(0.2, 0, 0, 1);
+  --app-duration-fast: 140ms;
+  --app-duration: 240ms;
+}
