@@ -599,7 +599,7 @@ export class AdbToolboxApp extends LitElement {
         position: fixed;
         inset: var(--app-header) auto 0 0;
         z-index: 30;
-        width: min(86vw, 312px);
+        width: min(78vw, 248px);
         transform: translateX(-105%);
         transition: transform var(--app-duration) var(--app-easing);
         box-shadow: var(--app-shadow);
