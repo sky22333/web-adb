@@ -134,12 +134,14 @@ export class AdbToolboxApp extends LitElement {
           <button class="icon-button" @click=${this.toggleTheme} aria-label="切换主题">
             <md-icon>${isDark ? 'light_mode' : 'dark_mode'}</md-icon>
           </button>
-          <md-filled-button @click=${this.connectAdb}
-            >${this.app.adb.status === 'connected' ? '断开 ADB' : '连接 ADB'}</md-filled-button
-          >
-          <md-outlined-button @click=${this.connectFastboot}
-            >${this.app.fastboot.status === 'connected' ? '断开 Fastboot' : '连接 Fastboot'}</md-outlined-button
-          >
+          <div class="connect-actions">
+            <md-filled-button @click=${this.connectAdb}
+              >${this.app.adb.status === 'connected' ? '断开 ADB' : '连接 ADB'}</md-filled-button
+            >
+            <md-outlined-button @click=${this.connectFastboot}
+              >${this.app.fastboot.status === 'connected' ? '断开 Fastboot' : '连接 Fastboot'}</md-outlined-button
+            >
+          </div>
         </header>
 
         <aside class=${this.railOpen ? 'rail open' : 'rail'}>
@@ -167,7 +169,7 @@ export class AdbToolboxApp extends LitElement {
               : nothing}
           </div>
         </aside>
-        <main class="main">${this.activeTask()} ${this.connectHint()} ${this.renderPage()}</main>
+        <main class="main">${this.activeTask()} ${this.renderPage()}</main>
         <nav class="bottom-nav">${MOBILE_NAV.map((item) => this.mobileNavItem(item))}</nav>
       </div>
     `;
@@ -200,15 +202,6 @@ export class AdbToolboxApp extends LitElement {
       default:
         return html`<overview-page></overview-page>`;
     }
-  }
-
-  private connectHint() {
-    if (this.app.adb.status !== 'idle' || this.app.fastboot.status !== 'idle') return nothing;
-    return html`<div class="hint">
-      <md-icon>usb</md-icon>
-      <span>尚未连接设备。点击右上角「连接 ADB」授权调试，或「连接 Fastboot」进入刷机模式。</span>
-      <md-filled-button @click=${this.connectAdb}>连接 ADB</md-filled-button>
-    </div>`;
   }
 
   private statusChip(label: string, status: ConnectionStatus, detail?: string) {
@@ -436,8 +429,13 @@ export class AdbToolboxApp extends LitElement {
     .status small {
       color: var(--md-sys-color-outline);
     }
-    .topbar > md-filled-button,
-    .topbar > md-outlined-button {
+    .connect-actions {
+      display: flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+    .connect-actions md-filled-button,
+    .connect-actions md-outlined-button {
       flex: 0 0 auto;
       min-width: 96px;
     }
@@ -531,24 +529,6 @@ export class AdbToolboxApp extends LitElement {
       overflow: auto;
       padding: 20px 22px;
     }
-    .hint {
-      width: min(1180px, 100%);
-      margin: 0 auto 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1px solid var(--md-sys-color-outline-variant);
-      border-radius: 16px;
-      background: var(--md-sys-color-surface-container-low);
-    }
-    .hint span {
-      flex: 1;
-      color: var(--md-sys-color-on-surface);
-    }
-    .hint md-icon {
-      color: var(--md-sys-color-primary);
-    }
     .task-strip {
       width: min(1180px, 100%);
       margin: 0 auto 16px;
@@ -574,11 +554,18 @@ export class AdbToolboxApp extends LitElement {
       }
     }
     @media (max-width: 760px) {
+      :host {
+        --app-header: 96px;
+      }
       .shell {
         grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
       }
       .topbar {
-        padding: 0 10px;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: auto;
+        padding: 8px 10px;
       }
       .menu-button {
         display: inline-grid;
@@ -591,9 +578,17 @@ export class AdbToolboxApp extends LitElement {
       .brand span {
         display: none;
       }
-      .topbar md-filled-button,
-      .topbar md-outlined-button {
-        display: none;
+      .connect-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .connect-actions md-filled-button,
+      .connect-actions md-outlined-button {
+        width: 100%;
+        min-width: 0;
+        --md-filled-button-container-height: 34px;
+        --md-outlined-button-container-height: 34px;
       }
       .rail {
         position: fixed;
