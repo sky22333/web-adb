@@ -44,4 +44,6 @@
   --app-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei UI',
     ui-sans-serif, sans-serif;
   --app-mono: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+  --app-scrollbar-size: 8px;
+  --app-scrollbar-thumb: color-mix(in srgb, var(--md-sys-color-outline) 72%, transparent);
 }

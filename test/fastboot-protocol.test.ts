@@ -12,7 +12,9 @@ describe('fastboot protocol', () => {
 
   it('guesses partitions from filenames', () => {
     expect(guessPartition('boot.img')).toBe('boot');
-    expect(guessPartition('magisk_patched_init_boot.img')).toBe('init_boot');
+    expect(guessPartition('init_boot.img')).toBe('init_boot');
+    expect(guessPartition('vendor_boot.img')).toBe('vendor_boot');
+    expect(guessPartition('magisk_patched_init_boot.img')).toBe('');
     expect(guessPartition('unknown.img')).toBe('');
   });
 

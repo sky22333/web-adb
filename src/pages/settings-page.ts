@@ -40,33 +40,22 @@ export class SettingsPage extends StorePage {
           <div class="card">
             <div class="field-stack">
               <label>外观主题</label>
-              <md-outlined-select id="themeMode" value=${settings.theme} @change=${this.applyTheme}>
-                <md-select-option value="auto" ?selected=${settings.theme === 'auto'}
-                  ><div slot="headline">跟随系统</div></md-select-option
-                >
-                <md-select-option value="light" ?selected=${settings.theme === 'light'}
-                  ><div slot="headline">浅色</div></md-select-option
-                >
-                <md-select-option value="dark" ?selected=${settings.theme === 'dark'}
-                  ><div slot="headline">深色</div></md-select-option
-                >
+              <md-outlined-select id="themeMode" .value=${settings.theme} @change=${this.applyTheme}>
+                <md-select-option value="auto"><div slot="headline">跟随系统</div></md-select-option>
+                <md-select-option value="light"><div slot="headline">浅色</div></md-select-option>
+                <md-select-option value="dark"><div slot="headline">深色</div></md-select-option>
               </md-outlined-select>
               <label>Fastboot 传输块</label>
-              <md-outlined-select id="chunkSize" value=${String(settings.fastbootChunkSize)} @change=${this.applyChunk}>
+              <md-outlined-select id="chunkSize" .value=${String(settings.fastbootChunkSize)} @change=${this.applyChunk}>
                 ${CHUNK_SIZES.map(
                   ([value, label]) =>
-                    html`<md-select-option value=${String(value)} ?selected=${settings.fastbootChunkSize === value}
-                      ><div slot="headline">${label}</div></md-select-option
-                    >`,
+                    html`<md-select-option value=${String(value)}><div slot="headline">${label}</div></md-select-option>`,
                 )}
               </md-outlined-select>
               <label>最大日志行数</label>
-              <md-outlined-select id="maxLogs" value=${String(settings.maxLogLines)} @change=${this.applyMaxLogs}>
+              <md-outlined-select id="maxLogs" .value=${String(settings.maxLogLines)} @change=${this.applyMaxLogs}>
                 ${[600, 1000, 2000].map(
-                  (n) =>
-                    html`<md-select-option value=${String(n)} ?selected=${settings.maxLogLines === n}
-                      ><div slot="headline">${n}</div></md-select-option
-                    >`,
+                  (n) => html`<md-select-option value=${String(n)}><div slot="headline">${n}</div></md-select-option>`,
                 )}
               </md-outlined-select>
             </div>

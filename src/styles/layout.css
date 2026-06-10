@@ -18,3 +18,29 @@ md-filled-text-field {
   --md-outlined-text-field-container-shape: var(--app-radius-control);
   --md-filled-text-field-container-shape: var(--app-radius-control);
 }
+
+:root {
+  scrollbar-width: thin;
+  scrollbar-color: var(--app-scrollbar-thumb) transparent;
+}
+
+*,
+*::before,
+*::after {
+  scrollbar-width: inherit;
+  scrollbar-color: inherit;
+}
+
+*::-webkit-scrollbar {
+  width: var(--app-scrollbar-size);
+  height: var(--app-scrollbar-size);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--app-scrollbar-thumb);
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}

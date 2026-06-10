@@ -41,8 +41,8 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
   {
     title: 'Fastboot 刷机',
     items: [
-      { id: 'fb-queue', label: '批量刷入', icon: 'layers' },
       { id: 'fb-single', label: '手动刷入', icon: 'bolt' },
+      { id: 'fb-queue', label: '批量刷入', icon: 'layers' },
       { id: 'fb-terminal', label: 'Fastboot 终端', icon: 'code' },
       { id: 'fb-tools', label: '常用操作', icon: 'build' },
     ],
@@ -60,7 +60,7 @@ const MOBILE_NAV: NavItem[] = [
   { id: 'overview', label: '工作台', icon: 'dashboard' },
   { id: 'shell', label: 'ADB', icon: 'terminal' },
   { id: 'files', label: '文件', icon: 'folder' },
-  { id: 'fb-queue', label: '刷机', icon: 'bolt' },
+  { id: 'fb-single', label: '刷机', icon: 'bolt' },
   { id: 'logs', label: '日志', icon: 'history' },
 ];
 

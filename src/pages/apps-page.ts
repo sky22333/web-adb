@@ -69,7 +69,7 @@ export class AppsPage extends StorePage {
           <div class="toolbar">
             <md-outlined-text-field id="pkgFilter" label="搜索包名" @input=${this.refresh}></md-outlined-text-field>
             <md-outlined-select id="pkgType" value="3" @change=${this.refresh}>
-              <md-select-option value="3" selected><div slot="headline">第三方应用</div></md-select-option>
+              <md-select-option value="3"><div slot="headline">第三方应用</div></md-select-option>
               <md-select-option value="all"><div slot="headline">全部应用</div></md-select-option>
               <md-select-option value="s"><div slot="headline">系统应用</div></md-select-option>
             </md-outlined-select>

@@ -53,10 +53,7 @@ export class LogcatPage extends StorePage {
             <md-outlined-text-field id="logcatFilter" label="过滤关键字"></md-outlined-text-field>
             <md-outlined-select id="logcatLevel" value="I">
               ${LEVELS.map(
-                ([level, label]) =>
-                  html`<md-select-option value=${level} ?selected=${level === 'I'}
-                    ><div slot="headline">${label}</div></md-select-option
-                  >`,
+                ([level, label]) => html`<md-select-option value=${level}><div slot="headline">${label}</div></md-select-option>`,
               )}
             </md-outlined-select>
           </div>

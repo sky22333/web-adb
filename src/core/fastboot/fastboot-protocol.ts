@@ -28,6 +28,9 @@ export const PARTITIONS = [
   'init_boot',
   'init_boot_a',
   'init_boot_b',
+  'vendor_boot',
+  'vendor_boot_a',
+  'vendor_boot_b',
   'recovery',
   'system',
   'system_a',
@@ -46,7 +49,8 @@ export const PARTITIONS = [
 export function guessPartition(name: string): string {
   const normalized = name.toLowerCase().replace(/\.(img|bin)$/, '');
   if (PARTITIONS.includes(normalized)) return normalized;
-  return [...PARTITIONS].sort((a, b) => b.length - a.length).find((part) => normalized.includes(part)) || '';
+  const slotless = normalized.replace(/_(a|b)$/, '');
+  return PARTITIONS.includes(slotless) ? slotless : '';
 }
 
 export function normalizeFastbootCommand(command: string): string {

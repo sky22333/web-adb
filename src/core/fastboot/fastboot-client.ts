@@ -1,7 +1,8 @@
 import { appStore } from '../state/app-store';
 import { getUsb } from '../usb/usb-capabilities';
 import { AppError, toAppError } from '../utils/errors';
-import { FastbootPacket, isAndroidSparseImage, parseFastbootNumber, parseFastbootPacket } from './fastboot-protocol';
+import { FastbootPacket, parseFastbootNumber, parseFastbootPacket } from './fastboot-protocol';
+import { getFlashDownloadSize, iterateFlashData } from './sparse-image';
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -9,8 +10,8 @@ const decoder = new TextDecoder();
 const RESPONSE_BYTES = 256;
 const COMMAND_TIMEOUT_MS = 10_000;
 const LONG_COMMAND_TIMEOUT_MS = 120_000;
-const DATA_TIMEOUT_MS = 30_000;
-const FLASH_TIMEOUT_MS = 120_000;
+const DATA_TIMEOUT_MS = 60_000;
+const FLASH_TIMEOUT_MS = 300_000;
 
 type FinalPacket = Extract<FastbootPacket, { type: 'okay' | 'data' }>;
 
@@ -94,23 +95,29 @@ export class FastbootClient {
   async flash(file: File, partition: string, chunkSize: number, onProgress?: (percent: number) => void): Promise<void> {
     this.ensure();
     await this.withLock(async () => {
-      await this.assertFlashable(file);
+      const downloadSize = await getFlashDownloadSize(file);
+      await this.assertFlashable(downloadSize);
 
-      const sizeHex = file.size.toString(16).padStart(8, '0');
+      const sizeHex = downloadSize.toString(16).padStart(8, '0');
       await this.writeCommand(`download:${sizeHex}`);
 
       const { packet: data } = await this.readFinal(['data'], COMMAND_TIMEOUT_MS);
-      if (data.size !== file.size) {
+      if (data.size !== downloadSize) {
         throw new AppError(
           'FASTBOOT_PROTOCOL_ERROR',
-          `Device accepted ${data.message} bytes, but image size is ${sizeHex}.`,
+          `Device accepted ${data.size} bytes, but download size is ${downloadSize}.`,
         );
       }
 
-      for (let offset = 0; offset < file.size; offset += chunkSize) {
-        const chunk = new Uint8Array(await file.slice(offset, Math.min(offset + chunkSize, file.size)).arrayBuffer());
+      let sent = 0;
+      for await (const chunk of iterateFlashData(file, chunkSize)) {
         await this.writeRaw(chunk, DATA_TIMEOUT_MS);
-        onProgress?.(Math.min(95, ((offset + chunk.byteLength) / file.size) * 95));
+        sent += chunk.byteLength;
+        onProgress?.(Math.min(95, (sent / downloadSize) * 95));
+      }
+
+      if (sent !== downloadSize) {
+        throw new AppError('FASTBOOT_PROTOCOL_ERROR', `Download sent ${sent} bytes, expected ${downloadSize}.`);
       }
 
       await this.readFinal(['okay'], COMMAND_TIMEOUT_MS);
@@ -136,16 +143,15 @@ export class FastbootClient {
     }
   }
 
-  private async assertFlashable(file: File): Promise<void> {
+  private async assertFlashable(downloadSize: number): Promise<void> {
     const max = this.maxDownloadSize ?? (await this.readMaxDownloadSize());
     this.maxDownloadSize = max;
-    if (!max || file.size <= max) return;
+    if (!max || downloadSize <= max) return;
 
-    const sparse = await isAndroidSparseImage(file);
     throw new AppError(
       'UNSUPPORTED_OPERATION',
-      `${sparse ? 'Sparse' : 'Raw'} image is larger than the device download limit.`,
-      `Image size is ${file.size} bytes, max-download-size is ${max} bytes. Split the image with platform fastboot first, or flash a smaller partition image.`,
+      'Image is larger than the device download limit.',
+      `Download size is ${downloadSize} bytes, max-download-size is ${max} bytes. Use platform fastboot to resparse large images first.`,
     );
   }
 
