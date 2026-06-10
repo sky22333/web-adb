@@ -6,7 +6,8 @@ describe('fastboot protocol', () => {
     expect(parseFastbootPacket('OKAYdone')).toEqual({ type: 'okay', message: 'done' });
     expect(parseFastbootPacket('FAILbad')).toEqual({ type: 'fail', message: 'bad' });
     expect(parseFastbootPacket('INFOstep')).toEqual({ type: 'info', message: 'step' });
-    expect(parseFastbootPacket('DATA00000100')).toEqual({ type: 'data', message: '00000100' });
+    expect(parseFastbootPacket('TEXTstep')).toEqual({ type: 'text', message: 'step' });
+    expect(parseFastbootPacket('DATA00000100')).toEqual({ type: 'data', message: '00000100', size: 256 });
   });
 
   it('guesses partitions from filenames', () => {

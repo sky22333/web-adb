@@ -2,16 +2,23 @@ export type FastbootPacket =
   | { type: 'okay'; message: string }
   | { type: 'fail'; message: string }
   | { type: 'info'; message: string }
-  | { type: 'data'; message: string };
+  | { type: 'text'; message: string }
+  | { type: 'data'; message: string; size: number };
 
 export function parseFastbootPacket(packet: string): FastbootPacket {
   const prefix = packet.slice(0, 4);
-  const message = packet.slice(4);
+  const message = packet.slice(4).replace(/\0+$/, '');
   if (prefix === 'OKAY') return { type: 'okay', message };
   if (prefix === 'FAIL') return { type: 'fail', message };
   if (prefix === 'INFO') return { type: 'info', message };
-  if (prefix === 'DATA') return { type: 'data', message };
-  return { type: 'info', message: packet };
+  if (prefix === 'TEXT') return { type: 'text', message };
+  if (prefix === 'DATA') {
+    if (!/^[0-9a-fA-F]{8}$/.test(message)) {
+      throw new Error(`Invalid Fastboot DATA packet: ${packet}`);
+    }
+    return { type: 'data', message, size: Number.parseInt(message, 16) };
+  }
+  throw new Error(`Unknown Fastboot packet: ${packet}`);
 }
 
 export const PARTITIONS = [
@@ -50,4 +57,17 @@ export function normalizeFastbootCommand(command: string): string {
   if (['getvar', 'erase', 'flash'].includes(verb) && arg) return `${verb}:${arg}`;
   if (verb === 'oem' && arg) return `oem ${arg}`;
   return trimmed;
+}
+
+export function parseFastbootNumber(value: string): number | undefined {
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+  const parsed = Number.parseInt(trimmed.replace(/^0x/i, ''), 16);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+export async function isAndroidSparseImage(file: File): Promise<boolean> {
+  if (file.size < 4) return false;
+  const header = new DataView(await file.slice(0, 4).arrayBuffer());
+  return header.getUint32(0, true) === 0xed26ff3a;
 }
