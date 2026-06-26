@@ -49,7 +49,7 @@ export class AppsPage extends StorePage {
               @files=${(e: CustomEvent<File[]>) => (this.apkFile = e.detail[0])}
             ></drop-zone>
             <div class="toolbar">
-              <label class="check"><md-checkbox id="apkGrant"></md-checkbox>-g 授权运行时权限</label>
+              <label class="check"><md-checkbox id="apkGrant"></md-checkbox>-g 自动授予应用声明的所有权限</label>
               <md-outlined-button @click=${this.install}>安装</md-outlined-button>
             </div>
           </div>
