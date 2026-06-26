@@ -1,6 +1,6 @@
 ## ADB / Fastboot 网页工具箱
 
-在浏览器中通过 WebUSB 直接控制 Android 设备，无需安装本地 adb / fastboot。基于 Vite + TypeScript + Lit + Material Web。
+在浏览器中通过 WebUSB 直接控制 Android 设备，无需安装本地 adb / fastboot。
 
 在线地址：https://blog.52013120.xyz/web-adb/
 
@@ -25,37 +25,10 @@
 ## 快速开始
 
 ```bash
-npm install
+npm i
 npm run dev
-```
-
-## 脚本
-
-| 命令 | 说明 |
-| --- | --- |
-| `npm run dev` | 启动开发服务器 |
-| `npm run build` | 生产构建 |
-| `npm run typecheck` | TypeScript 类型检查 |
-| `npm run lint` | ESLint 检查 |
-| `npm run test` | 运行单元测试 |
-| `npm run check` | 依次执行：类型检查 + lint + 测试 + 构建 |
-
-## 项目结构
-
-```
-src/
-├─ app-shell.ts      布局、导航、路由、连接入口
-├─ pages/            各功能页面组件
-├─ components/       可复用组件（拖拽上传、Material 注册）
-├─ core/
-│  ├─ adb/           ADB 连接、shell、应用、文件、截图、logcat
-│  ├─ fastboot/      Fastboot 连接、协议、刷入
-│  ├─ state/         全局状态（连接、任务、设置、日志）
-│  ├─ ui/            Toast 与确认框
-│  └─ utils/         工具函数
-└─ styles/           全局样式与组件共享样式
 ```
 
 ## 安全提示
 
-刷机、解锁、擦除、删除文件均可能导致数据丢失。工具对高风险命令做了二次确认与路径保护，但执行前请务必确认设备、分区与文件来源。
+刷机、解锁、擦除、删除文件均可能导致数据丢失。执行前请务必仔细确认设备、命令、分区与文件来源。
