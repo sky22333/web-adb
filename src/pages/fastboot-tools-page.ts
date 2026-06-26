@@ -13,7 +13,7 @@ export class FastbootToolsPage extends StorePage {
   render() {
     return html`
       <section class="page">
-        ${pageHead('Fastboot 常用操作', '危险命令会二次确认并记录运行日志。')}
+        ${pageHead('Fastboot 常用操作', '请谨慎操作。')}
         <div class="grid two">
           <div class="card">
             <div class="card-title">重启</div>

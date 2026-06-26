@@ -16,7 +16,7 @@ export class ShellPage extends StorePage {
   render() {
     return html`
       <section class="page">
-        ${pageHead('ADB Shell', '执行单条命令，输出会被完整读取并限制日志长度。')}
+        ${pageHead('ADB Shell', '执行单条命令，并输出执行结果。')}
         <div class="card">
           <div class="toolbar">
             <md-outlined-text-field

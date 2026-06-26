@@ -41,7 +41,7 @@ export class LogcatPage extends StorePage {
       <section class="page">
         ${pageHead(
           '实时日志',
-          '流式读取 logcat，切换页面不中断，停止时释放 socket。',
+          '流式读取 logcat。',
           html`
             <md-filled-button @click=${this.start} ?disabled=${this.running}>开始</md-filled-button>
             <md-outlined-button @click=${this.stop} ?disabled=${!this.running}>停止</md-outlined-button>

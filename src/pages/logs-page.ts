@@ -12,7 +12,7 @@ export class LogsPage extends StorePage {
       <section class="page">
         ${pageHead(
           '运行日志',
-          '全局操作日志和诊断信息，按级别着色。',
+          '全局操作日志和诊断信息。',
           html`
             <md-outlined-button @click=${() => appStore.patch({ logs: [] })}>清空</md-outlined-button>
             <md-filled-button @click=${this.copy}>复制</md-filled-button>

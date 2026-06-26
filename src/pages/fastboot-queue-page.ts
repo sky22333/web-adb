@@ -26,7 +26,7 @@ export class FastbootQueuePage extends StorePage {
       <section class="page">
         ${pageHead(
           'Fastboot 批量刷入',
-          '按顺序刷入多个小镜像。添加文件时会根据文件名预填分区：去掉 .img / .bin 后与内置分区名完全一致才自动填入（如 boot.img → boot）；带 _a / _b 后缀时会再尝试去掉槽位后缀（如 boot_a.img → boot）。不做子串猜测，无法匹配时留空，需手动填写。开始前请逐项核对。',
+          '按顺序刷入多个小镜像。添加文件时会根据文件名预填分区：去掉 .img / .bin 后与内置分区名完全一致才自动填入（如 boot.img → boot）；带 _a / _b 后缀时会再尝试去掉槽位后缀（如 boot_a.img → boot）。开始前请仔细核对。',
           html`
             <md-filled-button @click=${this.start} ?disabled=${this.running}>开始队列</md-filled-button>
             <md-outlined-button @click=${this.clear} ?disabled=${this.running}>清空</md-outlined-button>
