@@ -12,13 +12,13 @@ import '../components/drop-zone';
 
 type PackageAction = 'open' | 'stop' | 'clear' | 'uninstall' | 'disable' | 'enable';
 
-const ACTIONS: [PackageAction, string, boolean][] = [
-  ['open', '打开', false],
-  ['stop', '停止', false],
-  ['disable', '禁用', true],
-  ['enable', '启用', false],
-  ['clear', '清除数据', true],
-  ['uninstall', '卸载', true],
+const ACTIONS: [PackageAction, string][] = [
+  ['open', '打开'],
+  ['stop', '停止'],
+  ['disable', '禁用'],
+  ['enable', '启用'],
+  ['clear', '清除数据'],
+  ['uninstall', '卸载'],
 ];
 
 @customElement('apps-page')
@@ -50,17 +50,15 @@ export class AppsPage extends StorePage {
             ></drop-zone>
             <div class="toolbar">
               <label class="check"><md-checkbox id="apkGrant"></md-checkbox>-g 授权运行时权限</label>
-              <md-filled-button @click=${this.install}>安装</md-filled-button>
+              <md-outlined-button @click=${this.install}>安装</md-outlined-button>
             </div>
           </div>
           <div class="card">
             <div class="card-title">包名操作</div>
             <md-outlined-text-field id="pkgInput" class="mono" label="包名"></md-outlined-text-field>
             <div class="toolbar">
-              ${ACTIONS.map(([action, label, danger]) =>
-                danger
-                  ? html`<md-filled-button @click=${() => this.act(action)}>${label}</md-filled-button>`
-                  : html`<md-outlined-button @click=${() => this.act(action)}>${label}</md-outlined-button>`,
+              ${ACTIONS.map(([action, label]) =>
+                html`<md-outlined-button @click=${() => this.act(action)}>${label}</md-outlined-button>`,
               )}
             </div>
           </div>

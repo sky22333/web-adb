@@ -35,7 +35,7 @@ export class FilesPage extends StorePage {
               value=${this.currentPath}
               @keydown=${(e: KeyboardEvent) => e.key === 'Enter' && this.open(this.pathInput.value || '/sdcard/')}
             ></md-outlined-text-field>
-            <md-filled-button @click=${() => this.open(this.pathInput.value || '/sdcard/')}>打开</md-filled-button>
+            <md-outlined-button @click=${() => this.open(this.pathInput.value || '/sdcard/')}>打开</md-outlined-button>
             <md-outlined-button @click=${() => this.open(this.currentPath)}>刷新</md-outlined-button>
             <md-outlined-button @click=${() => this.copy(this.currentPath, '当前路径已复制')}>复制路径</md-outlined-button>
           </div>
@@ -49,7 +49,7 @@ export class FilesPage extends StorePage {
             <div class="card-title">快捷操作</div>
             <div class="toolbar">
               <md-outlined-text-field id="mkdirInput" label="新建目录名"></md-outlined-text-field>
-              <md-filled-button @click=${this.mkdir}>新建</md-filled-button>
+              <md-outlined-button @click=${this.mkdir}>新建</md-outlined-button>
             </div>
             <div class="toolbar">
               <md-outlined-text-field id="downloadInput" class="mono" label="直接下载路径"></md-outlined-text-field>

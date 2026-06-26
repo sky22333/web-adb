@@ -26,7 +26,7 @@ export class FastbootToolsPage extends StorePage {
           <div class="card danger-zone">
             <div class="card-title">危险操作</div>
             <div class="actions">
-              ${DANGERS.map((cmd) => html`<md-filled-button @click=${() => this.run(cmd)}>${cmd}</md-filled-button>`)}
+              ${DANGERS.map((cmd) => html`<md-outlined-button @click=${() => this.run(cmd)}>${cmd}</md-outlined-button>`)}
             </div>
           </div>
         </div>
