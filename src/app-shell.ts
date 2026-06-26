@@ -159,7 +159,7 @@ export class AdbToolboxApp extends LitElement {
             ${isWindows
               ? html`<a
                   class="rail-link"
-                  href="https://github.com/pbatard/libwdi"
+                  href="https://github.com/pbatard/libwdi/releases/download/v1.5.1/zadig-2.9.exe"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Windows USB 驱动 (libwdi)"
