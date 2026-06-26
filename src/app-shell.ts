@@ -124,7 +124,7 @@ export class AdbToolboxApp extends LitElement {
             <div class="brand-mark"><md-icon>adb</md-icon></div>
             <div>
               <strong>ADB / Fastboot 工具箱</strong>
-              <span>WebUSB 生产级设备控制台</span>
+              <span>WebUSB 设备控制台</span>
             </div>
           </div>
           <div class="status-cluster">
