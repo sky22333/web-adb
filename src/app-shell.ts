@@ -17,7 +17,8 @@ import { adbClient } from './core/adb/adb-client';
 import { fastbootClient } from './core/fastboot/fastboot-client';
 import { logcatController } from './core/adb/adb-logcat';
 import { AppState, appStore, ConnectionStatus } from './core/state/app-store';
-import { notify, reportError } from './core/ui/feedback';
+import { clearAppCache } from './core/pwa/clear-cache';
+import { confirmDialog, notify, reportError } from './core/ui/feedback';
 import { statusLabel } from './pages/widgets';
 
 interface NavItem {
@@ -167,6 +168,15 @@ export class AdbToolboxApp extends LitElement {
                   ><md-icon>usb</md-icon></a
                 >`
               : nothing}
+            <button
+              type="button"
+              class="rail-link"
+              @click=${this.clearCache}
+              aria-label="清除缓存"
+              title="清除缓存"
+            >
+              <md-icon>cleaning_services</md-icon>
+            </button>
           </div>
         </aside>
         <main class="main">${this.activeTask()} ${this.renderPage()}</main>
@@ -261,6 +271,25 @@ export class AdbToolboxApp extends LitElement {
     try {
       await fastbootClient.connect();
       notify(appStore.state.fastboot.status === 'connected' ? 'Fastboot 已连接' : 'Fastboot 已断开', 'ok');
+    } catch (error) {
+      reportError(error);
+    }
+  };
+
+  private clearCache = async () => {
+    if (
+      !(await confirmDialog({
+        message: '将清除 Service Worker 与离线缓存，并重新加载页面。\n应用设置会保留。',
+        confirmLabel: '清除并刷新',
+        danger: true,
+      }))
+    ) {
+      return;
+    }
+    try {
+      await clearAppCache();
+      appStore.log('离线缓存已清除', 'ok');
+      location.reload();
     } catch (error) {
       reportError(error);
     }
@@ -464,9 +493,13 @@ export class AdbToolboxApp extends LitElement {
       place-items: center;
       width: 30px;
       height: 30px;
+      padding: 0;
+      border: 0;
       border-radius: 10px;
       color: var(--md-sys-color-outline);
+      background: transparent;
       text-decoration: none;
+      cursor: pointer;
       transition:
         background var(--app-duration) var(--app-easing),
         color var(--app-duration) var(--app-easing);
