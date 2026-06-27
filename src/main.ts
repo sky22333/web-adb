@@ -1,3 +1,4 @@
+import '@fontsource/material-symbols-outlined/400.css';
 import './styles/reset.css';
 import './styles/tokens.css';
 import './styles/motion.css';
